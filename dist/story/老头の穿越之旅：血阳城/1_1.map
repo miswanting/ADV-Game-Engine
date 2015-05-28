@@ -1,0 +1,14 @@
+[value]
+lastMap=init
+nextMap=1_2
+[text]
+出场人物简介（1）：
+
+男一号：
+	名称：	${I}
+	性别：	男
+	特点：	未知
+	简介：	未知
+[code]
+input
+goto 1_2

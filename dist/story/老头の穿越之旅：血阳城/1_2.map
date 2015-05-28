@@ -1,0 +1,14 @@
+[value]
+lastMap=1_1
+nextMap=2_1
+[text]
+出场人物简介（2）：
+
+男二号（有好感度）：
+	名称：	${man1}
+	性别：	男
+	特点：	未知
+	简介：	未知
+[code]
+input
+goto 2_1

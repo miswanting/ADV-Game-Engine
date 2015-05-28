@@ -1,0 +1,12 @@
+[value]
+nextMap=1_1
+[text]
+老头の穿越之旅：血阳城
+
+
+
+
+[code]
+echo 1.开始游戏
+input
+if input=1 goto 1_1
