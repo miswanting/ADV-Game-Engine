@@ -35,6 +35,45 @@ This file provides the following several classes:
 		refresh()
 '''
 import os
+class PathManager(object):
+	"""docstring for FilePathConverter"""
+	path = ''
+	dir = ''
+	fileName = ''
+	extension = ''
+	def __init__(self):
+		#super(, self).__init__()
+		#self.arg = arg
+		pass
+
+	# Public function
+	def setPath(self, newPath):
+		self.path = newPath
+		self.breakPath()
+	def setDir(self, newDir):
+		self.dir = newDir
+		self.generatePath()
+	def setFileName(self, newFileName):
+		self.fileName = newFileName
+		self.extension = newFileName.split('.')[1]
+		self.generatePath()
+
+	def getPath(self):
+		return self.path
+	def getDir(self):
+		return self.dir
+	def getFileName(self):
+		return self.fileName
+	def getExtension(self):
+		return self.extension
+
+	# Private function
+	def generatePath(self):
+		self.path = self.dir + self.fileName
+	def breakPath(self):
+		tmp = self.path.split('\\')
+		self.dir, self.fileName = os.path.split(self.path)
+		self.extension = tmp[-1].split('.')[1]
 class BIOFileLoader:
 	path = ''
 	dir = ''
@@ -101,44 +140,7 @@ class BIOFolderLoader:
 	#二级函数
 	def getPath(self, fileName):
 		return self.dir + fileName
-class PathManager(object):
-	"""docstring for FilePathConverter"""
-	path = ''
-	dir = ''
-	fileName = ''
-	extension = ''
-	def __init__(self, arg):
-		super(FilePathConverter, self).__init__()
-		self.arg = arg
 
-	# Public function
-	def setPath(self, newPath):
-		self.path = newPath
-		self.breakPath()
-	def setDir(self, newDir):
-		self.dir = newDir
-		self.generatePath()
-	def setFileName(self, newFileName):
-		self.fileName = newFileName
-		self.extension = newFileName.split('.')[1]
-		self.generatePath()
-
-	def getPath(self):
-		return self.path
-	def getDir(self):
-		return self.dir
-	def getFileName(self):
-		return self.fileName
-	def getExtension(self):
-		return self.extension
-
-	# Private function
-	def generatePath(self):
-		self.path = self.dir + self.fileName
-	def breakPath(self):
-		tmp = self.path.split('\\')
-		self.dir, self.fileName = os.path.split(self.path)
-		self.extension = tmp[-1].split('.')[1]
 if __name__ == '__main__':
 	A = BIOFileLoader()
 	B = BIOFolderLoader()

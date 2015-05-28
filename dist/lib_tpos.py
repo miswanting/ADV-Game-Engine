@@ -12,7 +12,6 @@ class TPManager(object):
     push:To bring a text file into a TP file.
     pull:To take a text file from a TP file.
     exist:To find if there is a same file.
-
     load:To get the text in a text file from a TP file.
     save:To save the text in a text file to a TP file.
 
@@ -31,8 +30,9 @@ class TPManager(object):
     file = sys_bio.BIOFileLoader()
     data = []
     def __init__(self, ang):
-        super(, self).__init__()
-        self.arg = arg
+        #super(, self).__init__()
+        #self.arg = arg
+        pass
 
     # Public function
     def init(self, fileName = 'test.tp'):

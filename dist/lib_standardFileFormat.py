@@ -36,6 +36,7 @@ class mapLoader:
 	def getContentBySection(self, section):
 		section_found = False
 		content = []
+		currentSection = ''
 		for line in self.file.content:
 			if line != '':
 				if line[0] == '[':
@@ -133,6 +134,7 @@ class infoLoader:
 	def getValueByEntry(self, entry, section = ''):
 		section_found = False
 		entry_found = False
+		currentSection = ''
 		for line in self.file.content:
 			if line[0] == '[':
 				flag1, flag2 = 0, line.find(']')
