@@ -50,6 +50,7 @@ class PathManager(object):
 	def setPath(self, newPath):
 		self.path = newPath
 		self.breakPath()
+		# print('setPath:'+newPath,self.dir,self.fileName)
 	def setDir(self, newDir):
 		self.dir = newDir
 		self.generatePath()
@@ -61,7 +62,6 @@ class PathManager(object):
 	# Private function
 	def generatePath(self):
 		self.path = self.dir + '\\' +self.fileName
-		print('d:'+self.dir,'p:'+self.path,'n:'+self.fileName)
 	def breakPath(self):
 		tmp = self.path.split('\\')
 		self.dir, self.fileName = os.path.split(self.path)
@@ -91,6 +91,7 @@ class BIOFileLoader:
 			print('[WARN]There is no file named: \'' + self.path + '\'')
 	def save(self):
 		file = open(self.path, 'w')
+		# print(self.content,self.path)
 		for line in self.content:
 			file.writelines(line + '\n')
 		file.close()
@@ -102,14 +103,16 @@ class BIOFolderLoader:
 	#一级函数
 	def new(self, fileName):
 		self.path.setFileName(fileName)
-		file = open(self.path.fileName, 'w')
-		file.close()
+		if not os.path.exists(self.path.path):
+			file = open(self.path.path, 'w')
+			file.close()
+		# print('new:'+fileName)
 	def delete(self, fileName):
 		pass
 	def load(self, dir):
-		print('!'+dir)
 		self.path.setDir(dir)
 		self.content = os.listdir(self.path.dir)
+		# print('load:'+dir,self.path.dir,self.content)
 	def getEveryContentFile(self, withPath = False):
 		tmp = []
 		for each in self.content:
@@ -138,7 +141,5 @@ if __name__ == '__main__':
 	A = BIOFileLoader()
 	B = BIOFolderLoader()
 	C = PathManager()
-	C.setPath('\\story\\test.tp')
-	print('d:'+C.dir,'p:'+C.path,'n:'+C.fileName)
-	B.load('story\\')
-	print(B.getEveryContentFolder(True))
+	A.load('story\\test.tp')
+	print(A.content)

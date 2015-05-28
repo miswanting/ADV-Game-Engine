@@ -26,11 +26,8 @@ class TPManager(object):
     path = sys_bio.PathManager()
     vPath = sys_bio.PathManager()
 
-    path.setDir('story\\')
-    path.setFileName('test.tp')
-    vPath.setDir('\\')
-
-    file = sys_bio.BIOFolderLoader()
+    folder = sys_bio.BIOFolderLoader()
+    file = sys_bio.BIOFileLoader()
     data = []
     def __init__(self):
         #super(, self).__init__()
@@ -38,22 +35,19 @@ class TPManager(object):
         pass
 
     # Public function
-    def init(self, fileName = 'test.tp'):
-        self.path.fileName = fileName
-        self.file.new(self.path.fileName)
+    def init(self, path):
+        self.path.setPath(path)
+        self.folder.load(self.path.dir)
+        self.folder.new(self.path.fileName)
     def destroy(arg):
         self.path.fileName = 'test.tp'
         sys_bio.delete(self.path.fileName)
-    def new(self, virtualFileName):
-        self.vPath.setFileName(virtualFileName)
+    def new(self, path):
+        self.vPath.setPath(path)
+        print(self.vPath.dir,self.vPath.fileName)
         self.load()
-        print(self.vPath.fileName)
-        self.data.append(
-        self.startCharacter + self.vPath.dir +
-        self.splitCharacter + self.vPath.fileName.split('.')[0] +
-        self.splitCharacter + self.vPath.fileName.split('.')[1] +
-        self.endCharacter
-        )
+        if not self.exist(self.vPath.fileName, self.vPath.dir):
+            self.data.append([self.vPath.dir, self.vPath.fileName.split('.')[0], self.vPath.extension, []])
         self.save()
     def delete(self, virtualFileName):
         self.load()
@@ -73,14 +67,16 @@ class TPManager(object):
 
     # Private function
     def load(self):
-        self.file.load(self.path.dir)
+        self.file.load(self.path.path)
         self.TPFileAnalyze()
     def save(self):
+        print(self.data)
         content = []
         for file in self.data:
             fileHead = True
             for line in file[3]:
                 if fileHead:
+                    # print(self.data,file[0],file[1],file[2])
                     content.append(
                     self.startCharacter + file[0] +
                     self.splitCharacter + file[1] +
@@ -93,6 +89,7 @@ class TPManager(object):
                     self.startCharacter + self.endCharacter + line
                     )
         self.file.content = content
+        print(self.file.content)
         self.file.save()
     def refresh(self):
         pass
@@ -142,8 +139,8 @@ class TPManager(object):
         self.data.append(virtualFile)
 if __name__ == '__main__':
     I = TPManager()
-    I.init()# New a new TP file.
-    I.new('test.txt')# New a new text file in the TP file.
+    I.init('story\\test.tp')# New a new TP file.
+    I.new('folder\\test.txt')# New a new text file in the TP file.
     # data = I.load('test.txt')# Get text.
     # Do something.
     # I.save(data)# Save changes.
