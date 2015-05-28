@@ -95,6 +95,7 @@ class TPManager(object):
         dir, fileName, extension, unitContent, content, virtualFile = '', '', '', '', [], []
         for line in self.file.content:
             isBroken = False
+            isContent = False
             mode = 0
             if line[0] != self.startCharacter:
                 pass
@@ -105,6 +106,7 @@ class TPManager(object):
                     elif every == self.splitCharacter:
                         mode += 1
                     elif every == self.endCharacter:
+                        isContent = True
                         if dir == '':
                             pass
                         else:# At the very begining of a virtual file.
@@ -123,7 +125,7 @@ class TPManager(object):
                             fileName += every
                         elif mode == 2:
                             extension += every
-                        elif mode == -1:
+                        elif isContent:
                             unitContent += every
                 content.append(unitContent)
         virtualFile.append(content)
