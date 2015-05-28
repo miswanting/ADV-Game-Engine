@@ -58,18 +58,10 @@ class PathManager(object):
 		self.extension = newFileName.split('.')[1]
 		self.generatePath()
 
-	def getPath(self):
-		return self.path
-	def getDir(self):
-		return self.dir
-	def getFileName(self):
-		return self.fileName
-	def getExtension(self):
-		return self.extension
-
 	# Private function
 	def generatePath(self):
-		self.path = self.dir + self.fileName
+		self.path = self.dir + '\\' +self.fileName
+		print('d:'+self.dir,'p:'+self.path,'n:'+self.fileName)
 	def breakPath(self):
 		tmp = self.path.split('\\')
 		self.dir, self.fileName = os.path.split(self.path)
@@ -110,13 +102,14 @@ class BIOFolderLoader:
 	#一级函数
 	def new(self, fileName):
 		self.path.setFileName(fileName)
-		file = open(self.path.getFileName(), 'w')
+		file = open(self.path.fileName, 'w')
 		file.close()
 	def delete(self, fileName):
 		pass
 	def load(self, dir):
+		print('!'+dir)
 		self.path.setDir(dir)
-		self.content = os.listdir(self.path.getDir)
+		self.content = os.listdir(self.path.dir)
 	def getEveryContentFile(self, withPath = False):
 		tmp = []
 		for each in self.content:
@@ -139,10 +132,13 @@ class BIOFolderLoader:
 		self.load(self.dir)
 	#二级函数
 	def getPath(self, fileName):
-		return self.dir + fileName
+		return self.path.dir + fileName
 
 if __name__ == '__main__':
 	A = BIOFileLoader()
 	B = BIOFolderLoader()
+	C = PathManager()
+	C.setPath('\\story\\test.tp')
+	print('d:'+C.dir,'p:'+C.path,'n:'+C.fileName)
 	B.load('story\\')
 	print(B.getEveryContentFolder(True))

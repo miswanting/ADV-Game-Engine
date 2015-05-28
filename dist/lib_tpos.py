@@ -22,32 +22,36 @@ class TPManager(object):
     startCharacter = '|'
     splitCharacter = ':'
     endCharacter = '>'
-    currentDir = '\\story'
-    currentTPFileName = 'test.tp'
-    currentVirtualDir = '\\'
-    currentVirtualFileName = ''
 
-    file = sys_bio.BIOFileLoader()
+    path = sys_bio.PathManager()
+    vPath = sys_bio.PathManager()
+
+    path.setDir('story\\')
+    path.setFileName('test.tp')
+    vPath.setDir('\\')
+
+    file = sys_bio.BIOFolderLoader()
     data = []
-    def __init__(self, ang):
+    def __init__(self):
         #super(, self).__init__()
         #self.arg = arg
         pass
 
     # Public function
     def init(self, fileName = 'test.tp'):
-        self.currentTPFileName = fileName
-        sys_bio.new(self.currentTPFileName)
+        self.path.fileName = fileName
+        self.file.new(self.path.fileName)
     def destroy(arg):
-        self.currentTPFileName = 'test.tp'
-        sys_bio.delete(self.currentTPFileName)
+        self.path.fileName = 'test.tp'
+        sys_bio.delete(self.path.fileName)
     def new(self, virtualFileName):
-        self.virtualFileName = virtualFileName
+        self.vPath.setFileName(virtualFileName)
         self.load()
-        data.append(
-        self.startCharacter + self.currentVirtualDir +
-        self.splitCharacter + self.currentVirtualFileName.split('.')[0] +
-        self.splitCharacter + self.currentVirtualFileName.split('.')[1] +
+        print(self.vPath.fileName)
+        self.data.append(
+        self.startCharacter + self.vPath.dir +
+        self.splitCharacter + self.vPath.fileName.split('.')[0] +
+        self.splitCharacter + self.vPath.fileName.split('.')[1] +
         self.endCharacter
         )
         self.save()
@@ -59,18 +63,23 @@ class TPManager(object):
         pass
     def pull(arg):
         pass
-    def exist(self, path):
-        return False
+    def exist(self, fileName, dir = '\\'):
+        self.load()
+        isExist = False
+        for file in self.data:
+            if (dir == file[0] and fileName.split('.')[0] == file[1] and fileName.split('.')[1] == file[2]):
+                isExist = True
+        return isExist
 
     # Private function
     def load(self):
-        self.file.load(self.currentDir + self.currentTPFileName)
+        self.file.load(self.path.dir)
         self.TPFileAnalyze()
     def save(self):
         content = []
         for file in self.data:
             fileHead = True
-            for line in file.content:
+            for line in file[3]:
                 if fileHead:
                     content.append(
                     self.startCharacter + file[0] +
@@ -92,6 +101,7 @@ class TPManager(object):
         data{virtualFile{dir, fileName, extension, content{}}}
         '''
         isFirstRun = True
+        self.data = []
         dir, fileName, extension, unitContent, content, virtualFile = '', '', '', '', [], []
         for line in self.file.content:
             isBroken = False
@@ -132,10 +142,6 @@ class TPManager(object):
         self.data.append(virtualFile)
 if __name__ == '__main__':
     I = TPManager()
-    I.setCurrentDir()# Set path.
-    print('[TEST]Now I`m in dir: ' + I.getCurrentDir())
-    I.setCurrentTPFileName()# Set TP file name.
-    print('[TEST]Now I`m in dir: ' + I.getCurrentTPFileName())
     I.init()# New a new TP file.
     I.new('test.txt')# New a new text file in the TP file.
     # data = I.load('test.txt')# Get text.
