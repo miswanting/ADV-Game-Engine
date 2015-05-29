@@ -20,14 +20,13 @@ class TPManager(object):
     # rename
     """
     startCharacter = '|'
-    splitCharacter = ':'
     endCharacter = '>'
 
     path = sys_bio.PathManager()
-    vPath = sys_bio.PathManager()
 
     folder = sys_bio.BIOFolderLoader()
     file = sys_bio.BIOFileLoader()
+
     data = []
     def __init__(self):
         #super(, self).__init__()
@@ -43,11 +42,11 @@ class TPManager(object):
         self.path.fileName = 'test.tp'
         sys_bio.delete(self.path.fileName)
     def new(self, path):
-        self.vPath.setPath(path)
-        print(self.vPath.dir,self.vPath.fileName)
         self.load()
-        if not self.exist(self.vPath.fileName, self.vPath.dir):
-            self.data.append([self.vPath.dir, self.vPath.fileName.split('.')[0], self.vPath.extension, []])
+        if self.exist(path):
+            pass
+        else:
+            self.data.append([path, []])
         self.save()
     def delete(self, virtualFileName):
         self.load()
@@ -57,11 +56,11 @@ class TPManager(object):
         pass
     def pull(arg):
         pass
-    def exist(self, fileName, dir = '\\'):
+    def exist(self, path):
         self.load()
         isExist = False
         for file in self.data:
-            if (dir == file[0] and fileName.split('.')[0] == file[1] and fileName.split('.')[1] == file[2]):
+            if (path == file[0]):
                 isExist = True
         return isExist
 
@@ -97,10 +96,38 @@ class TPManager(object):
         '''
         data{virtualFile{dir, fileName, extension, content{}}}
         '''
-        isFirstRun = True
-        self.data = []
-        dir, fileName, extension, unitContent, content, virtualFile = '', '', '', '', [], []
+        isFirst, self.data, virtualFile, content = True, [], [], []
         for line in self.file.content:
+            mode, path, contentUnit = '', '', ''
+            if line[0] != self.startCharacter:
+                pass
+            else:
+                for every in line:
+                    if every == self.startCharacter:
+                        mode = 'path'
+                    elif every == self.endCharacter:
+                        mode = 'content'
+                        if path == '':
+                            content.append(contentUnit)
+                            contentUnit = ''
+                        else:
+                            # At the very begining of a virtual file.
+                            if isFirst:
+                                isFirst = False
+                                virtualFile = [path]
+                                path = ''
+                            else:
+                                virtualFile.append(content)
+                                content = []
+                                self.data.append(virtualFile)
+                                virtualFile = []
+                    elif mode == 'path':
+                        path += every
+                    elif mode == 'content':
+                        contentUnit += every
+        virtualFile.append(content)
+        self.data.append(virtualFile)
+'''
             isBroken = False
             isContent = False
             mode = 0
@@ -137,6 +164,7 @@ class TPManager(object):
                 content.append(unitContent)
         virtualFile.append(content)
         self.data.append(virtualFile)
+'''
 if __name__ == '__main__':
     I = TPManager()
     I.init('story\\test.tp')# New a new TP file.
