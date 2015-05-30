@@ -1,6 +1,4 @@
 #coding=utf-8
-#总完成度=50%
-#当前版本完成度=80%
 
 import os
 import time
@@ -8,6 +6,13 @@ import time
 import lib_standardFileFormat
 
 class Game:
+	'''
+	1. Read save data.
+	2. Load scene.
+	3. Show text.
+	4. Generate code.
+	5. Handle user input.
+	'''
 	isRunning = True
 	currentSavePath = 'save\\'
 	currentMapPath = 'story\老头の穿越之旅：血阳城\\'
@@ -157,4 +162,3 @@ class Game:
 if __name__ == '__main__':
 	I = Game()
 	I.run()
-	

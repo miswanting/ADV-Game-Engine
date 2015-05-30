@@ -1,8 +1,13 @@
 #coding=utf-8
-#本文件提供了以下对象：
+
 import time
+
 import lib_standardFileFormat
+
 class mapCloud:
+	'''
+	This class is used to manage a story line.
+	'''
 	cloud = []
 	initMap = ''
 	cloudBranch = []
@@ -86,6 +91,9 @@ class mapCloud:
 		else:
 			print('[WARN]There is no next map.')
 class mapCloudUnit:
+	'''
+	This class is used to be an abstract model of every map.
+	'''
 	lastMaps = []
 	nextMaps = []
 	tag = []#tag = branch, start, end, the_end, retrain, input
@@ -149,4 +157,3 @@ if __name__ == '__main__':
 	#
 	for each in I.cloud:
 		print(each.nextMaps)
-		

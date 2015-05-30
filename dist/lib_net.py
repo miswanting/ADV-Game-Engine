@@ -1,5 +1,5 @@
 ﻿#coding=utf-8
-#本文件提供了以下对象：
+
 import socket
 
 class TCPServer:
@@ -23,7 +23,7 @@ class TCPClient:
 		#I/O on this clisock
 		#clisock.send("")
 		#dat = clisock.recv(len)
-		print dat  
+		print dat
 	def send(self, text):
 		pass
 	def recv(self):
@@ -83,4 +83,3 @@ class netClient:
 if __name__ == '__main__':
 	#实例化
 	I = mapCloud()
-	

@@ -1,6 +1,11 @@
 #coding=utf-8
+
 import sys_bio
+
 class mapLoader:
+	'''
+	This class is used to be a container of a mapFile.
+	'''
 	file = sys_bio.BIOFileLoader()
 	def __init__(self):
 		pass
@@ -66,6 +71,9 @@ class mapLoader:
 	def replaceCode(self, newCode):
 		self.replaceContentBySection(code, newCode)
 class infoLoader:
+	'''
+	This class is used to be a container of a infoFile.
+	'''
 	file = sys_bio.BIOFileLoader()
 	def __init__(self):
 		pass
