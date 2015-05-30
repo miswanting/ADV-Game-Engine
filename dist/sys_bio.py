@@ -36,11 +36,16 @@ This file provides the following several classes:
 '''
 import os
 class PathManager(object):
-	"""docstring for FilePathConverter"""
+	"""
+	Now this class is just for class-BIOFolderLoader.
+	"""
 	path = ''
 	dir = ''
+	# story\
 	fileName = ''
+	# test.tp
 	extension = ''
+	# tp
 	def __init__(self):
 		#super(, self).__init__()
 		#self.arg = arg
@@ -95,24 +100,36 @@ class BIOFileLoader:
 		for line in self.content:
 			file.writelines(line + '\n')
 		file.close()
-class BIOFolderLoader:
+class BIOFolderLoader(object):
+	'''
+	load:CD to a new directory.
+	new:New a file in current directory.
+	delete:Delete a file in current directory.
+	setPath:CD to a new directory and set a pre-fileName.
+	getEveryContentFile:Get a list of every file contented.
+	getEveryContentFolder:Get a list of every folder contented.
+	refresh:Reload current directory.
+	TODO Built in class-BIOFileLoader.
+	'''
 	path = PathManager()
 	content = []
 	def __init__(self):
 		pass
 	#一级函数
-	def new(self, fileName):
+	def new(self, fileName = path.fileName):
 		self.path.setFileName(fileName)
 		if not os.path.exists(self.path.path):
 			file = open(self.path.path, 'w')
 			file.close()
 		# print('new:'+fileName)
-	def delete(self, fileName):
+	def delete(self, fileName = path.fileName):
 		pass
-	def load(self, dir):
+	def load(self, dir = path.dir):
 		self.path.setDir(dir)
 		self.content = os.listdir(self.path.dir)
 		# print('load:'+dir,self.path.dir,self.content)
+	def setPath(self, path):
+		self.path.setPath(path)
 	def getEveryContentFile(self, withPath = False):
 		tmp = []
 		for each in self.content:
@@ -132,7 +149,7 @@ class BIOFolderLoader:
 					tmp.append(each)
 		return tmp
 	def refresh(self):
-		self.load(self.dir)
+		self.load(self.path.dir)
 	#二级函数
 	def getPath(self, fileName):
 		return self.path.dir + fileName
