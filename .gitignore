@@ -17,7 +17,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-/__pycache__/
+dist/__pycache__/*.*
 
 # =========================
 # Operating System Files
