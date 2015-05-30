@@ -116,15 +116,15 @@ class BIOFolderLoader(object):
 	def __init__(self):
 		pass
 	#一级函数
-	def new(self, fileName = self.path.fileName):
+	def new(self, fileName = path.fileName):
 		self.path.setFileName(fileName)
 		if not os.path.exists(self.path.path):
 			file = open(self.path.path, 'w')
 			file.close()
 		# print('new:'+fileName)
-	def delete(self, fileName = self.path.fileName):
+	def delete(self, fileName = path.fileName):
 		pass
-	def load(self, dir = self.path.dir):
+	def load(self, dir = path.dir):
 		self.path.setDir(dir)
 		self.content = os.listdir(self.path.dir)
 		# print('load:'+dir,self.path.dir,self.content)
