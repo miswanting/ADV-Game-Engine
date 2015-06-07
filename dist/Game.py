@@ -10,7 +10,7 @@ import lib_standardFileFormat
 class Game:
 	isRunning = True
 	currentSavePath = 'save\\'
-	currentMapPath = 'story\老头の穿越之旅：血阳城\\'
+	currentMapPath = 'story\\老头の穿越之旅：血阳城\\'
 	currentSave = 'sys.save'
 	currentMap = 'init.map'
 	saveLoader = lib_standardFileFormat.infoLoader()
@@ -157,4 +157,3 @@ class Game:
 if __name__ == '__main__':
 	I = Game()
 	I.run()
-	
