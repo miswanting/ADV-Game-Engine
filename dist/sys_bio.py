@@ -2,26 +2,12 @@
 '''
 This file provides the following several classes:
 	BIOFileLoader
-		path
-			Type: String
-			defined when load() run. Refers to the relative path of the loaded file.
-		dir
-			Type: String
-			defined when load() run. Refers to the relative directory of the loaded file.
-		filename
-			Type: String
-			defined when load() run. Refers to the filename of the loaded file.
-		content
-			Type: List
-			defined when load() run. Refers to the content of the loaded file.
-
-		__init__()
-			Does nothing.
-		load(path)
-			Load specific file. And there is no return data.
-			path: This parameter needs accurate path which contains direction, name and extension.
-		save()
-			Save current file data. And there is no return data.
+		path:Refers to the relative path of the loaded file.
+		dir:Refers to the relative directory of the loaded file.
+		filename:Refers to the filename of the loaded file.
+		content:Refers to the content of the loaded file.
+		load:Load specific file. And there is no return data.
+		save:Save current file data.
 	BIOFolderLoader
 		dir
 		content
@@ -38,6 +24,7 @@ import os
 class PathManager(object):
 	"""
 	Now this class is just for class-BIOFolderLoader.
+
 	"""
 	path = ''
 	dir = ''
@@ -73,7 +60,12 @@ class PathManager(object):
 		self.extension = tmp[-1].split('.')[1]
 class BIOFileLoader:
 	'''
+<<<<<<< HEAD
 	TODO Need to be rewrite.
+=======
+	load(path):Load a text file and store text in content list, provides dir and fileName.
+	save():Save content list in text file.
+>>>>>>> origin/Enhancement
 	'''
 	path = ''
 	dir = ''
@@ -105,8 +97,8 @@ class BIOFileLoader:
 		file.close()
 class BIOFolderLoader(object):
 	'''
-	load:CD to a new directory.
-	new:New a file in current directory.
+	load(dir = path.dir):CD to a new directory.
+	new(fileName = path.fileName)::New a file in current directory.
 	delete:Delete a file in current directory.
 	setPath:CD to a new directory and set a pre-fileName.
 	getEveryContentFile:Get a list of every file contented.
