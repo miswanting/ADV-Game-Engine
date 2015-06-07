@@ -72,6 +72,9 @@ class PathManager(object):
 		self.dir, self.fileName = os.path.split(self.path)
 		self.extension = tmp[-1].split('.')[1]
 class BIOFileLoader:
+	'''
+	TODO Need to be rewrite.
+	'''
 	path = ''
 	dir = ''
 	fileName = ''

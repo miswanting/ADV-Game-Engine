@@ -5,7 +5,7 @@ import lib_standardFileFormat
 class BTextEditor:
 	'''
 	Basic-Text-Editor(Built-in)
-	
+
 	'''
 	isRunning = True
 	isCoding = True

@@ -8,14 +8,14 @@ import lib_standardFileFormat
 class Game:
 	'''
 	1. Read save data.
-	2. Load scene.
+	2. Load map.
 	3. Show text.
 	4. Generate code.
 	5. Handle user input.
 	'''
 	isRunning = True
 	currentSavePath = 'save\\'
-	currentMapPath = 'story\老头の穿越之旅：血阳城\\'
+	currentMapPath = 'story\\老头の穿越之旅：血阳城\\'
 	currentSave = 'sys.save'
 	currentMap = 'init.map'
 	saveLoader = lib_standardFileFormat.infoLoader()

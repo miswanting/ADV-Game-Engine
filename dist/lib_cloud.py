@@ -6,7 +6,7 @@ import lib_standardFileFormat
 
 class mapCloud:
 	'''
-	This class is used to manage a story line.
+	This class is used to manage the story line.
 	'''
 	cloud = []
 	initMap = ''
@@ -16,7 +16,7 @@ class mapCloud:
 	targetList = []
 	def __init__(self):
 		pass
-	#一级函数
+	# Public function
 	def setCloudDir(self, dir):
 		self.cloudDir = dir
 	def setInitMap(self, initMap):
@@ -42,7 +42,7 @@ class mapCloud:
 		for each in self.cloud:
 			if each.fileName == mapName:
 				return each.lastMaps
-	#二级函数
+	# Private function
 	def isExist(self, fileName):
 		cloud_found = False
 		for each in self.cloud:
@@ -72,7 +72,6 @@ class mapCloud:
 				each.addTag('retrain')
 			if len(each.nextMaps) == 1 and each.nextMaps[0] == each.fileName:
 				each.addTag('~~Dangerous circle~~')
-	#三级函数
 	def chainMapUnit(self):
 		newUnit = mapCloudUnit()
 		newUnit.reset()
@@ -146,14 +145,14 @@ class mapCloudUnit:
 		if not hasFound:
 			self.tag.append(newTag)
 if __name__ == '__main__':
-	#实例化
+	# 实例化
 	I = mapCloud()
-	#
-	I.setCloudDir('story\老头の穿越之旅：血阳城\\')
-	#
+	# Set cloud dir.
+	I.setCloudDir('story\\老头の穿越之旅：血阳城\\')
+	# Set entry map.
 	I.setInitMap('init.map')
-	#
+	# Start analyzing.
 	I.generate()
-	#
+	# Show every chained map.
 	for each in I.cloud:
 		print(each.nextMaps)

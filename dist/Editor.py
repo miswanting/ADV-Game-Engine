@@ -19,11 +19,11 @@ class Editors:
 			del: Delete a story.
 			open: Open a story & turn into MODE-map & show maps.
 			exit: Exit program.
-		scene: A independent scene.
-			new: New a scene.
-			del: Delete a scene.
-			open: Open a scene  & show content.
-			close: Exit a scene & turn into MODE-story & show stories list.
+		map: A independent map.
+			new: New a map.
+			del: Delete a map.
+			open: Open a map  & show content.
+			close: Exit a map & turn into MODE-story & show stories list.
 			show: Show logic overview & customTags.
 			prev: Show previous branches and offer to choose one & open it.
 			next: Show next branches and offer to choose one & open it.
@@ -36,13 +36,13 @@ class Editors:
 			add: Add a line in certain place.
 			overWrite: overWrite a certain line.
 			del: Delete a certain line.
-			close: Exit & turn into MODE-scene.
+			close: Exit & turn into MODE-map.
 		command editor(based on text editor):
 			init: Initialize command part.
 			add: Add a command in certain place.
 			overWrite: overWrite a certain command.
 			del: Delete a certain command.
-			close: Exit & turn into MODE-scene.
+			close: Exit & turn into MODE-map.
 	'''
 	isRunning = True
 	storyDir = 'story\\'
