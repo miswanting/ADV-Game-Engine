@@ -73,10 +73,23 @@ class mapLoader:
 class infoLoader:
 	'''
 	This class is used to be a container of a infoFile.
+
+	load(path):
+		Load infoFile.
+	save():
+		Save infoFile.
+	setValueByEntry(entry, value, section = ''):
+		Set value.
+	getValueByEntry(entry, section = ''):
+		Get value.
+	addValueByEntry(entry, section = '', addend = 1):
+		Add the value by a number.
+	TODO delEntry(entry, section = '')
 	'''
 	file = sys_bio.BIOFileLoader()
 	def __init__(self):
 		pass
+	# Public function
 	def load(self, path):
 		self.file.load(path)
 	def save(self):

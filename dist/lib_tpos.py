@@ -5,13 +5,9 @@ Write your description here.
 import sys_bio
 class TPManager(object):
     """
-<<<<<<< HEAD
     This class is used to manage a TP(Text-Package) file.
 
     init:Set up a new TP file, and make it empty.
-=======
-    init(path):Set up a new TP file, and make it empty.
->>>>>>> origin/Enhancement
     destroy:Delete a TP file.
     new(path):New a new folder or file in a TP file.
     delete:Delete a folder or a file in a TP file.

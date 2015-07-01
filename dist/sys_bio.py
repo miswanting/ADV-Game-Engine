@@ -1,30 +1,8 @@
 #coding=utf-8
-'''
-This file provides the following several classes:
-	BIOFileLoader
-		path:Refers to the relative path of the loaded file.
-		dir:Refers to the relative directory of the loaded file.
-		filename:Refers to the filename of the loaded file.
-		content:Refers to the content of the loaded file.
-		load:Load specific file. And there is no return data.
-		save:Save current file data.
-	BIOFolderLoader
-		dir
-		content
-
-		__init__()
-		new(path)
-		load(dir)
-		getPath()
-		getEveryContentFile(withPath = False)
-		getEveryContentFolder(withPath = False)
-		refresh()
-'''
 import os
 class PathManager(object):
 	"""
 	Now this class is just for class-BIOFolderLoader.
-
 	"""
 	path = ''
 	dir = ''
@@ -60,16 +38,23 @@ class PathManager(object):
 		self.extension = tmp[-1].split('.')[1]
 class BIOFileLoader:
 	'''
-<<<<<<< HEAD
-	TODO Need to be rewrite.
-=======
-	load(path):Load a text file and store text in content list, provides dir and fileName.
-	save():Save content list in text file.
->>>>>>> origin/Enhancement
+	dir:String. After load(path).
+		Store dir.
+	fileName:String. After load(path).
+		Store current file name(include extension).
+	path:String. After load(path).
+		Store current path.
+	content:List. After load(path).
+		Store text.
+
+	load(path):
+		Load a text file.
+	save():
+		Save content list in text file.
 	'''
-	path = ''
 	dir = ''
 	fileName = ''
+	path = ''
 	content = []
 	def __init__(self):
 		pass
@@ -97,14 +82,27 @@ class BIOFileLoader:
 		file.close()
 class BIOFolderLoader(object):
 	'''
-	load(dir = path.dir):CD to a new directory.
-	new(fileName = path.fileName)::New a file in current directory.
-	delete:Delete a file in current directory.
-	setPath:CD to a new directory and set a pre-fileName.
-	getEveryContentFile:Get a list of every file contented.
-	getEveryContentFolder:Get a list of every folder contented.
-	refresh:Reload current directory.
+	content:List.
+
+	load(dir = path.dir):
+		CD to a new directory, generate file list.
+	new(fileName = path.fileName):
+		New a file in current directory.
+	delete(self, fileName = path.fileName):
+		Delete a file in current directory.
+	setPath(path):
+		CD to a new directory and set a pre-fileName.
+	getEveryContentFile(withPath = False):
+		Get a list of every file contented.
+	getEveryContentFolder(withPath = False):
+		Get a list of every folder contented.
+	refresh():
+		Reload current directory.
+
 	TODO Built in class-BIOFileLoader.
+	TODO loadContent(path):
+	TODO saveContent(content):
+	TODO getFolderList():
 	'''
 	path = PathManager()
 	content = []
