@@ -3,7 +3,7 @@
 import os
 import time
 
-import lib_standardFileFormat
+import lib_standardDataFormat
 
 class Game:
 	'''
@@ -18,8 +18,8 @@ class Game:
 	currentMapPath = 'story\\老头の穿越之旅：血阳城\\'
 	currentSave = 'sys.save'
 	currentMap = 'init.map'
-	saveLoader = lib_standardFileFormat.infoLoader()
-	mapLoader = lib_standardFileFormat.mapLoader()
+	saveLoader = lib_standardDataFormat.infoLoader()
+	mapLoader = lib_standardDataFormat.mapLoader()
 	readin = ''
 	def __init__(self):
 		os.system('title Crazy_Engine(ADV)[Beta]')
