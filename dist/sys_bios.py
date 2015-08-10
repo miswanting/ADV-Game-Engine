@@ -2,6 +2,9 @@
 
 '''
 The format of this code is advocated!
+
+vFile = [Directory:str, fileName:str, [Content..:str]]
+vFolder = [Directory:str, folderName:str, [vFolder..], [vFile..]]
 '''
 
 import os
@@ -24,17 +27,15 @@ class BIOS:
 	'''
 
 	# Public function
-	def new(self, path, content = []):
-		dir, fileName = os.path.split(path)
-		self.save([dir, fileName, content])
+	def new(self, vFile):
+		self.setVFile(vFile)
 
-	def delete(self, path):
+	def delete(self, vFile):
 		pass
 
-	def load(self, path):
-		dir, fileName = os.path.split(path)
-		if os.path.exists(path):
-			file = open(path)
+	def getVFile(self, vFile):
+		if os.path.exists(vFile[0] + '\\' + vFile[1]):
+			file = open(vFile[0] + '\\' + vFile[1])
 			raw_content = file.readlines()
 			file.close()
 			content = []
@@ -43,36 +44,82 @@ class BIOS:
 					content.append(line[0:-1])
 				else:
 					content.append(line)
-			return [dir, fileName, content]
+			return [vFile[0], vFile[1], content]
 		else:
-			print('[WARN]There is no file named: \'' + self.path + '\'')
+			print('[WARN]There is no file named: \'' + vFile[0] + '\\' + vFile[1] + '\'')
 
-	def save(self, file):
-		path = file[0] + '\\' + file[1]
+	def setVFile(self, vFile):
+		path = vFile[0] + '\\' + vFile[1]
 		file = open(path, 'w')
 		# print(self.content,self.path)
-		for line in file[2]:
+		for line in vFile[2]:
 			file.writelines(line + '\n')
 		file.close()
 
-	def getEveryFileByDir(self, dir):
-		list = os.listdir(dir)
-		fileList = []
-		for each in list:
-			if os.path.isfile(dir + '\\' + each):
-				fileList.append(self.load(dir + '\\' + each))
-		return fileList
+	def getVFolder(self, vFolder):
+			path = ''
+			if vFolder[0] == '':
+				path = vFolder[1]
+			else:
+				path = vFolder[0] + '\\' + vFolder[1]
+			list = os.listdir(path)
+			# Generate subVFolder.
+			subVFolder = []
+			subVFile = []
+			for each in list:
+				if os.path.isdir(path + '\\' + each):
+					subVFolder.append(self.getVFolder([path, each]))
+			# Generate subVFile.
+				elif os.path.isfile(path + '\\' + each):
+					subVFile.append(self.getVFile([path, each]))
+			return [vFolder[0], vFolder[1], subVFolder, subVFile]
 
-	def getEveryFolderByDir(self, dir):
-		list = os.listdir(dir)
-		folderList = []
-		for each in list:
-			if os.path.isdir(dir + '\\' + each):
-				folderList.append([dir, each])
-		return folderList
+	def isExist(self, vFile):
+		if os.path.exists(vFile[0] + '\\' + vFile[1]):
+			return True
+		else:
+			return False
 
 if __name__ == '__main__':
 	I = BIOS()
-	print(I.load('story\\test.tp')[0] + '\\' + I.load('story\\test.tp')[1])
-	print(I.getEveryFileByDir('story'))
-	print(I.getEveryFolderByDir('story'))
+
+# TEST function-new(self, vFile):void
+	# Test 1: New a empty file in "test\".
+	print('Test 1: New a empty file in "test\\".')
+	print('Forecast result: "".')
+	newTestFile = ['test', 'newEmptyFile.txt', []]
+	I.new(newTestFile)
+	print('Result: "' + '' + '".\n')
+
+	# Test 2: New a file with content in "test\".
+	print('Test 2: New a file with content in "test\\".')
+	print('Forecast result: "".')
+	newFile = ['test', 'newFile.txt', ['Line 1', 'Line 2']]
+	I.new(newFile)
+	print('Result: "' + '' + '".\n')
+
+# TEST function-getVFile(path):[Directory, [vFolder..], [vFile..]]
+	# Test 3: Get "test\newFile.txt" & print.
+	print('Test 3: Get "test\\newFile.txt" & print.')
+	print('Forecast result: "[\'Line 1\', \'Line 2\']".')
+	file = I.getVFile(['test', 'newFile.txt'])
+	print('Result: "' + str(file[2]) + '".\n')
+
+	# Test 4: Add a line in "test\newFile.txt" & save & print.
+	print('Test 4: Add a line in "test\\newFile.txt" & save & print.')
+	print('Forecast result: "[\'Line 1\', \'Line 2\', \'Line 3\']".')
+	file[2].append('Line 3')
+	I.setVFile(file)
+	file = I.getVFile(['test', 'newFile.txt'])
+	print('Result: "' + str(file[2]) + '".\n')
+
+# TEST function-getVFolder(dir):[fileList..]
+	# Test 5: Print every file in "test\".
+	print('Test 5: Print every file in "test\\".')
+	print('Forecast result: "[[\'test\', \'newEmptyFile.txt\', []], [\'test\', \'newFile.txt\', [\'Line 1\', \'Line 2\', \'Line 3\']]]".')
+	print('Result: "' + str(I.getVFolder(['', 'test'])[3]) + '".\n')
+
+	# Test 6: Print every folder name in "test\".
+	print('Test 6: Print every thing in "test\\".')
+	print('Forecast result: "[[\'test\', \'Folder 1\', [], []], [\'test\', \'Folder 2\', [], []]]".')
+	print('Result: "' + str(I.getVFolder(['', 'test'])[2]) + '".\n')

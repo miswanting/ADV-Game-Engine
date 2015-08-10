@@ -16,8 +16,8 @@ class mapLoader:
 	bios = sys_bios.BIOS()
 
 	# Public function
-	def load(self, path):
-		self.content = self.bios.load(path)
+	def load(self, path, fileName):
+		self.content = self.bios.getVFile([path, fileName])
 
 	def save(self):
 		self.bios.save(self.content)
@@ -107,8 +107,8 @@ class infoLoader:
 	bios = sys_bios.BIOS()
 
 	# Public function
-	def load(self, path):
-		self.content = self.bios.load(path)
+	def load(self, path, fileName):
+		self.content = self.bios.getVFile([path, fileName])
 
 	def save(self):
 		self.bios.save(self.content)
@@ -218,7 +218,6 @@ class infoLoader:
 if __name__ == '__main__':
 	I = infoLoader()
 	I.load('save\sys.save')
-	print(I.file.content)
 	I.setValueByEntry('name', 'YYY', 'value')
 	print(I.getValueByEntry('name', 'value'))
 	I.setValueByEntry('age', 18, 'value')

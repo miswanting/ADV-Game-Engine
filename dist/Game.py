@@ -14,8 +14,8 @@ class Game:
 	5. Handle user input.
 	'''
 	isRunning = True
-	currentSavePath = 'save\\'
-	currentMapPath = 'story\\老头の穿越之旅：血阳城\\'
+	currentSavePath = 'save'
+	currentMapPath = 'story\\老头の穿越之旅：血阳城'
 	currentSave = 'sys.save'
 	currentMap = 'init.map'
 	saveLoader = lib_standardDataFormat.infoLoader()
@@ -24,14 +24,14 @@ class Game:
 	def __init__(self):
 		os.system('title Crazy_Engine(ADV)[Beta]')
 		self.readSave()
-		pass
+
 	def readSave(self):
-		self.saveLoader.load(self.currentSavePath + self.currentSave)
+		self.saveLoader.load(self.currentSavePath, self.currentSave)
 	def run(self):
 		while self.isRunning:
 			os.system('cls')
 			#time.sleep(1)
-			self.mapLoader.load(self.currentMapPath + self.currentMap)
+			self.mapLoader.load(self.currentMapPath, self.currentMap)
 			self.handleMap()
 	def handleMap(self):
 		for line in self.mapLoader.getText():
