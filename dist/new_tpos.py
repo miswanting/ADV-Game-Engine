@@ -23,7 +23,7 @@ class TPOS:
     def init(self, vFile = []):
         if vFile == []:
             if self.vFile == []:
-                print('[WARN][TPOS-init]请先设置目标指针！')
+                print('[WARN][TPOS-init]请先指定目标文件！')
             else:
                 self.bios.new(self.vFile)
         else:

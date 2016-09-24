@@ -2,6 +2,8 @@
 
 '''
 The format of this code is advocated!
+
+Version:1.0
 '''
 
 import sys_bios
