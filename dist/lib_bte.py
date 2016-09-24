@@ -1,10 +1,12 @@
 #coding=utf-8
-'''
-This file provides the following several classes:
-	
-'''
+
 import lib_standardFileFormat
+
 class BTextEditor:
+	'''
+	Basic-Text-Editor(Built-in)
+
+	'''
 	isRunning = True
 	isCoding = True
 	file = lib_standardFileFormat.mapLoader()
@@ -59,4 +61,3 @@ class BTextEditor:
 			print('[WARN]Function only recive story number as string!')
 if __name__ == '__main__':
 	A = BTextEditor()
-	

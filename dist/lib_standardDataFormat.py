@@ -1,20 +1,37 @@
 #coding=utf-8
-import sys_bio
+
+'''
+The format of this code is advocated!
+
+Version:1.0
+'''
+
+import sys_bios
+
 class mapLoader:
-	file = sys_bio.BIOFileLoader()
-	def __init__(self):
-		pass
-	def load(self, path):
-		self.file.load(path)
+
+	'''
+	This class is used to be a container of a mapFile.
+	load():
+	'''
+
+	bios = sys_bios.BIOS()
+
+	# Public function
+	def load(self, path, fileName):
+		self.content = self.bios.getVFile([path, fileName])
+
 	def save(self):
-		self.file.save()
+		self.bios.save(self.content)
+
 	def getFileName(self):
-		return self.file.fileName
+		return self.content[1]
+
 	def replaceContentBySection(self, section, content):
 		currentSection = ''
 		newContent = []
 		ignore = False
-		for line in self.file.content:
+		for line in self.content[2]:
 			if line[0] == '[':
 				flag1, flag2 = 0, line.find(']')
 				if flag2 != -1:
@@ -29,15 +46,16 @@ class mapLoader:
 					else:
 						ignore = False
 				else:
-					print('[WARN]Broken data in: \'' + self.file.path + '\'')
+					print('[WARN]Broken data in: \'' + self.content[0] + '\\' + self.content[1] + '\'')
 			elif not ignore:
 				newContent.append(line)
 		self.file.content = newContent
+
 	def getContentBySection(self, section):
 		section_found = False
 		content = []
 		currentSection = ''
-		for line in self.file.content:
+		for line in self.content[2]:
 			if line != '':
 				if line[0] == '[':
 					flag1, flag2 = 0, line.find(']')
@@ -48,38 +66,62 @@ class mapLoader:
 							flag2 -= 1#'n|_'
 						currentSection = line[flag1 + 1:flag2]
 					else:
-						print('[WARN]Broken data in: \'' + self.file.path + '\'')
+						print('[WARN]Broken data in: \'' + self.content[0] + '\\' + self.content[1] + '\'')
 				elif currentSection == section:
 					section_found = True
 					content.append(line)
 			else:
 				content.append(line)
 		if not section_found:
-			print('[WARN]There is no section: \'' + section + '\' in file: \'' + self.file.path + '\'')
+			print('[WARN]There is no section: \'' + section + '\' in file: \'' + self.content[0] + '\\' + self.content[1] + '\'')
 		return content
+
 	def getText(self):
 		return self.getContentBySection('text')
+
 	def getCode(self):
 		return self.getContentBySection('code')
+
 	def replaceText(self, newText):
 		self.replaceContentBySection(text, newText)
+
 	def replaceCode(self, newCode):
 		self.replaceContentBySection(code, newCode)
+
 class infoLoader:
-	file = sys_bio.BIOFileLoader()
-	def __init__(self):
-		pass
-	def load(self, path):
-		self.file.load(path)
+
+	'''
+	This class is used to be a container of a infoFile.
+
+	load(path):
+		Load infoFile.
+	save():
+		Save infoFile.
+	setValueByEntry(entry, value, section = ''):
+		Set value.
+	getValueByEntry(entry, section = ''):
+		Get value.
+	addValueByEntry(entry, section = '', addend = 1):
+		Add the value by a number.
+	TODO delEntry(entry, section = '')
+	'''
+
+	bios = sys_bios.BIOS()
+
+	# Public function
+	def load(self, path, fileName):
+		self.content = self.bios.getVFile([path, fileName])
+
 	def save(self):
-		self.file.save()
+		self.bios.save(self.content)
+
 	def setValueByEntry(self, entry, value, section = ''):
 		value = str(value)
 		currentSection = ''
 		newData = []
 		section_found = False
 		entry_found = False
-		for line in self.file.content:
+		for line in self.content[2]:
 			if line[0] == '[':
 				flag1, flag2 = 0, line.find(']')
 				if flag2 != -1:
@@ -90,7 +132,7 @@ class infoLoader:
 					currentSection = line[flag1 + 1:flag2]
 					newData.append('[ ' + currentSection + ' ]')
 				else:
-					print('[WARN]Broken data in:' + self.file.path + '\'')
+					print('[WARN]Broken data in:' + self.content[0] + '\\' + self.content[1] + '\'')
 			elif currentSection == section:
 				section_found = True
 				if line.find('=') != -1:
@@ -110,11 +152,11 @@ class infoLoader:
 						newData.append(line[flag1:flag2] + ' = ' + line[flag3 + 1:flag4])
 		if not section_found:
 			newData.append('[ ' + section + ' ]')
-		self.file.content = newData
+		self.content = [self.content[0], self.content[1], newData]
 		if not entry_found:
 			currentSection = ''
 			newData = []
-			for line in self.file.content:
+			for line in self.content[2]:
 				if line[0] == '[':
 					flag1, flag2 = 0, line.find(']')
 					if flag2 != -1:
@@ -127,15 +169,16 @@ class infoLoader:
 						if currentSection == section:
 							newData.append(entry + ' = ' + value)
 					else:
-						print('[WARN]Broken data in:' + self.file.path + '\'')
+						print('[WARN]Broken data in: \'' + self.content[0] + '\\' + self.content[1] + '\'')
 				else:
 					newData.append(line)
-			self.file.content = newData
+			self.content = [self.content[0], self.content[1], newData]
+
 	def getValueByEntry(self, entry, section = ''):
 		section_found = False
 		entry_found = False
 		currentSection = ''
-		for line in self.file.content:
+		for line in self.content[2]:
 			if line[0] == '[':
 				flag1, flag2 = 0, line.find(']')
 				if flag2 != -1:
@@ -145,7 +188,7 @@ class infoLoader:
 						flag2 -= 1#'n|_'
 					currentSection = line[flag1 + 1:flag2]
 				else:
-					print('[WARN]Broken data in: \'' + self.file.path + '\'')
+					print('[WARN]Broken data in: \'' + self.content[0] + '\\' + self.content[1] + '\'')
 			elif currentSection == section:
 				section_found = True
 				if line.find('=') != -1:
@@ -162,20 +205,21 @@ class infoLoader:
 						entry_found = True
 						return line[flag3 + 1:flag4]
 		if not section_found:
-			print('[WARN]There is no section: \'' + section + '\' in file: \'' + self.file.path + '\'')
+			print('[WARN]There is no section: \'' + section + '\' in file: \'' + self.content[0] + '\\' + self.content[1] + '\'')
 		elif not entry_found:
-			print('[WARN]There is no entry: \'' + entry + '\' in section: \''+ section + '\' in file: \'' + self.file.path + '\'')
+			print('[WARN]There is no entry: \'' + entry + '\' in section: \''+ section + '\' in file: \'' + self.content[0] + '\\' + self.content[1] + '\'')
+
 	def addValueByEntry(self, entry, section = '', addend = 1):
 		value = self.getValueByEntry(entry, section)
 		if value.isdigit():
 			newValue = int(value) + addend
 			self.setValueByEntry(entry, newValue, section)
 		else:
-			print('[WARN]The custom variables:\'' + entry + '\' in section: \'' + section + '\' in file: \'' + self.file.path + '\' is not numbers!')
+			print('[WARN]The custom variables:\'' + entry + '\' in section: \'' + section + '\' in file: \'' + self.content[0] + '\\' + self.content[1] + '\' is not numbers!')
+
 if __name__ == '__main__':
 	I = infoLoader()
 	I.load('save\sys.save')
-	print(I.file.content)
 	I.setValueByEntry('name', 'YYY', 'value')
 	print(I.getValueByEntry('name', 'value'))
 	I.setValueByEntry('age', 18, 'value')

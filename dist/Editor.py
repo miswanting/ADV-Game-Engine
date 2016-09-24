@@ -1,8 +1,4 @@
 #coding=utf-8
-#story:对story的新建、删除、重命名、故事线的查看。
-#map:对map文件的新建、初始化、删除、重命名、故事线的查看。
-#line:对文本的增添、修改、删除；对命令的增添、修改、删除。
-#text:文本输入。
 
 import os
 
@@ -10,19 +6,56 @@ import sys_bio
 import lib_cloud
 import lib_standardFileFormat
 import lib_bte
-class Editor:
+
+class Editors:
+	'''
+	1. Show stories.
+	2. Waiting for input.
+	function-loop handles user input.
+	TODO achieve command in function-loop.
+	There are 4 MODE:
+		story: A independent file.
+			new: New a story.
+			del: Delete a story.
+			open: Open a story & turn into MODE-map & show maps.
+			exit: Exit program.
+		map: A independent map.
+			new: New a map.
+			del: Delete a map.
+			open: Open a map  & show content.
+			close: Exit a map & turn into MODE-story & show stories list.
+			show: Show logic overview & customTags.
+			prev: Show previous branches and offer to choose one & open it.
+			next: Show next branches and offer to choose one & open it.
+			setTag: Set custom tags to make story line clear.
+			delTag: Delete a tag from a map.
+			editText: turn into text editor.
+			editCMD: turn into command editor.
+		text editor:
+			init: Initialize text part.
+			add: Add a line in certain place.
+			overWrite: overWrite a certain line.
+			del: Delete a certain line.
+			close: Exit & turn into MODE-map.
+		command editor(based on text editor):
+			init: Initialize command part.
+			add: Add a command in certain place.
+			overWrite: overWrite a certain command.
+			del: Delete a certain command.
+			close: Exit & turn into MODE-map.
+	'''
 	isRunning = True
 	storyDir = 'story\\'
 	currentStoryDir = ''
 	currentStoryName = ''
 	currentMapName = ''
 	initMap = 'init.map'
-	
+
 	folderLoader = sys_bio.BIOFolderLoader()
 	mapCloud = lib_cloud.mapCloud()
 	textEditor = lib_bte.BTextEditor()
-	
-	#map专有属性
+
+	# map专有属性
 	currentIndex = []
 	currentValue = []
 	lastMap = []
@@ -30,14 +63,16 @@ class Editor:
 	currentStatus = 'story'
 	def __init__(self):
 		os.system('title Crazy_Engine_Editor(ADV)[Beta]')
-	#一级函数
+
+	# Public function
 	def run(self):
 		self.showStories()
 		while self.isRunning:
 			cmd = input('>')
 			os.system('cls')
 			self.loop(cmd)
-	#二级函数
+
+	# Private core function
 	def loop(self, cmd):
 		if self.currentStatus == 'story':
 			self.showStories()
@@ -62,7 +97,8 @@ class Editor:
 				self.openLine(cmd[1])
 		elif self.currentStatus == 'text':
 			pass
-	#三级函数
+
+	# Private function
 	def analyzeMap(self):
 		pass
 	def showStories(self):
@@ -123,4 +159,3 @@ class Editor:
 if __name__ == '__main__':
 	I = Editor()
 	I.run()
-	

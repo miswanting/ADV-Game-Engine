@@ -1,2 +1,6 @@
-|\:test1:txt>This is test file!
-|testFolder\:test2:txt>
+|folder:number.txt>111
+|>222
+|>333
+|a.txt>aaa
+|>bbb
+|>ccc
