@@ -3,8 +3,10 @@
 '''
 The format of this code is advocated!
 
-vFile = [Directory:str, fileName:str, [Content..:str]]
-vFolder = [Directory:str, folderName:str, [vFolder..], [vFile..]]
+vFile = [directory:str, fileName:str, [Content..:str]]
+vFolder = [directory:str, folderName:str, [vFolder..], [vFile..]]
+
+Version:1.0
 '''
 
 import os
@@ -46,7 +48,7 @@ class BIOS:
 					content.append(line)
 			return [vFile[0], vFile[1], content]
 		else:
-			print('[WARN]There is no file named: \'' + vFile[0] + '\\' + vFile[1] + '\'')
+			print('[WARN][BIOS-getVFile]There is no file named: \'' + vFile[0] + '\\' + vFile[1] + '\'')
 
 	def setVFile(self, vFile):
 		path = vFile[0] + '\\' + vFile[1]
