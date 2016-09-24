@@ -15,16 +15,12 @@ class storyConverter(object):
 	GL!
 	"""
 
-	tp = lib_tpos.TPManager()
+	tpos = lib_tpos.TPOS()
 
 	# Public function
-	def compress(path, file):
+	def convert(path, file):
 
-		self.tp.init(file)
-		self.tp.setPath(path)
-		self.tp.pullContent()
-	def decompress(file, path):
-		pass
+		
 
 	# Private function
 
@@ -32,5 +28,5 @@ if __name__ == '__main__':
 	# instantiation
 	I = storyConverter()
 	# compress TP file.
-	I.compress('story\\老头の穿越之旅：血阳城\\', 'story\\老头の穿越之旅：血阳城.tp')
+	I.convert('story\\老头の穿越之旅：血阳城', 'story\\老头の穿越之旅：血阳城.tp')
 	# I.decompress('story\\老头の穿越之旅：血阳城.tp', 'story\\老头の穿越之旅：血阳城\\')
